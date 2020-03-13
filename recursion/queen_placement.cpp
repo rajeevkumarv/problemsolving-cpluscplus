@@ -31,7 +31,7 @@ bool isDiagonallySafe(vector<int> assigned,int i,int offset, int j){
     return true;
 }
 
-void queenNonAttachingPlacements(vector<vector<int>>& results,vector<int>& columns, int r,int offset){
+void queenNonAttackingPlacements(vector<vector<int>>& results,vector<int>& columns, int r,int offset){
 
     //we are done when we have exhausted all pending columns
     if(offset == columns.size()){
@@ -46,14 +46,14 @@ void queenNonAttachingPlacements(vector<vector<int>>& results,vector<int>& colum
         if(isDiagonallySafe(columns, r,offset,columns[i])){ // continue if queen is not diagonally attacked by other queens
             //keep all used columns on the left, all candidate columns would be placed after offset
             std::swap(columns[offset],columns[i]);
-            queenNonAttachingPlacements(results,columns,r+1,offset+1);
+            queenNonAttackingPlacements(results,columns,r+1,offset+1);
             std::swap(columns[offset],columns[i]);
         }
 
     }
 }
 
-bool queenNonAttachingPlacement(vector<int>& columns, int r,int offset){
+bool queenNonAttackingPlacement(vector<int>& columns, int r,int offset){
     //we are done when we have exhausted all pending columns
     if(offset == columns.size()){
         return true;
@@ -67,7 +67,7 @@ bool queenNonAttachingPlacement(vector<int>& columns, int r,int offset){
         if(isDiagonallySafe(columns, r,offset,columns[i])){ // continue if queen is not diagonally attacked by other queens
             //keep all used columns on the left, all candidate columns would be placed after offset
             std::swap(columns[offset],columns[i]);
-            if(queenNonAttachingPlacement(columns,r+1,offset+1)){
+            if(queenNonAttackingPlacement(columns,r+1,offset+1)){
                 return true;
             }
             std::swap(columns[offset],columns[i]);
@@ -77,22 +77,22 @@ bool queenNonAttachingPlacement(vector<int>& columns, int r,int offset){
 }
 
 //Placement of N queens on NxN board
-vector<int> queenNonAttachingPlacement(int N){
+vector<int> queenNonAttackingPlacement(int N){
     vector<int> columns;
     int i=0;
     std::generate_n(std::back_inserter(columns),N,[&i](void)-> int {return i++;});
-    if(!queenNonAttachingPlacement(columns,0,0)){
+    if(!queenNonAttackingPlacement(columns,0,0)){
         return vector<int>();
     }
     return columns;
 }
 
 //All queen placements of N queens on NxN board
-void queenNonAttachingPlacements(vector<vector<int>>& placements, int N){
+void queenNonAttackingPlacements(vector<vector<int>>& placements, int N){
     vector<int> columns;
     int i=0;
     std::generate_n(std::back_inserter(columns),N,[&i](void)-> int {return i++;});
-    queenNonAttachingPlacements(placements,columns,0,0);
+    queenNonAttackingPlacements(placements,columns,0,0);
 }
 
 //Driver program
@@ -101,14 +101,14 @@ int main(){
     //Get a non attacking position for 4 queens on 4x4 board
     {
         std::cout<<"A Non attacking position for 4x4 board : "<<std::endl;
-        vector<int> placement  = queenNonAttachingPlacement(4);
+        vector<int> placement  = queenNonAttackingPlacement(4);
         util::print(placement);
     }
 
     //Get a non attacking position for 8 queens on 8x8 board
     {
         std::cout<<"A Non attacking position for 8x8 board : "<<std::endl;
-        vector<int> placement  = queenNonAttachingPlacement(8);
+        vector<int> placement  = queenNonAttackingPlacement(8);
         util::print(placement);
     }
 
@@ -116,7 +116,7 @@ int main(){
     {
         std::cout<<"All non attacking position for 4x4 board : "<<std::endl;
         vector<vector<int>> placements;
-        queenNonAttachingPlacements(placements,4);
+        queenNonAttackingPlacements(placements,4);
         for(auto& placement : placements){
             util::print(placement);
         }
@@ -127,7 +127,7 @@ int main(){
     {
         std::cout<<"All non attacking position for 8x8 board : "<<std::endl;
         vector<vector<int>> placements;
-        queenNonAttachingPlacements(placements,8);
+        queenNonAttackingPlacements(placements,8);
         for(auto& placement : placements){
             util::print(placement);
         }
