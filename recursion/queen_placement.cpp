@@ -123,7 +123,7 @@ int main(){
     }
 
 
-    //Get all non attacking position for 8 queens on 8x8 board
+    //Get all non attacking position for 8 queens on  8x8 board
     {
         std::cout<<"All non attacking position for 8x8 board : "<<std::endl;
         vector<vector<int>> placements;
