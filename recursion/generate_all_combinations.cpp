@@ -62,12 +62,11 @@ void generate_all_combinations(vector<char>& input, vector<char>& out, int i){
 
 
 //Driver Programm
-//int main(){
-//
-//    vector<char> v ={ 'A','B','C','D'};
-//    vector<char> out;
-//    generate_all_combinations(v,out,0);
-//}
+void main(){
+    vector<char> v ={ 'A','B','C','D'};
+    vector<char> out;
+    generate_all_combinations(v,out,0);
+}
 
 
 
