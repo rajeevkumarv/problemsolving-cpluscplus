@@ -1,75 +1,50 @@
-/*
- * longest_increasing_contiguous_subarray.cpp
- *
- *  Created on: 22-Mar-2020
- *      Author: rajeevkumarv84@gmail.com
- */
-
-#include<vector>
-#include<string>
 #include<iostream>
-#include<numeric>
-
-//inclusion for simple utility functions
-#include "../util/util.h"
-
+#include<vector>
 using namespace std;
 
-std::pair<int,int> longest_increasing_subarray(vector<int> arr){
+std::pair<int,int> longest_increasing_subarray(vector<int>& nums){
+    int start=0,end=0;
+    int cs = 0;
 
-    if(arr.empty()) return std::make_pair(0,0);
-
-    //Table to fill longest increasing subarray for every element
-    vector<int> ls(arr.size());
-    ls[0] =1; //for first element, it longest subarray would be 1
-    int max_so_far =ls[0];
-    int x=0;
-    int y=0;
-    int cur_start =0;
-
-    for(int i = 1; i < arr.size(); ++i){
-        if(arr[i] > arr[i-1]){
-            ls[i]=ls[i-1]+1;
-        }else{
-            ls[i]=1;
-            cur_start = i;
-        }
-        if(max_so_far < ls[i]){
-            x = cur_start;
-            y = i;
-            max_so_far = ls[i];
+    int i = 1;
+    for( ;i<nums.size(); ++i){
+        if(nums[i] <= nums[i-1]){
+            if( (end-start+1) < (i - cs) ){
+                start = cs;
+                end = i-1;
+            }
+            cs = i;
         }
     }
-    return std::make_pair(x,y);
-}
 
-void print(vector<int>& arr,std::pair<int,int> res){
-    int i = res.first;
-    int j = res.second;
-    util::print(arr,"Longest increasing subsequence for ",false);
-    std::cout<<" is --->>> "<< " [ ";
-    for( ; i<=j ; ++i){
-        std::cout<<arr[i]<< ", ";
+    if( (end-start+1) < (i - cs) ){
+        start = cs;
+        end = i-1;
     }
-    std::cout<<" ] "<<std::endl;
+
+    return std::make_pair(start,end);
 }
 
-//Driver program
+//Driver
 int main(){
-    vector<int> arr = {1};
-    auto result = longest_increasing_subarray(arr);
-    print(arr,result);
-
-    arr = {3,2,1};
-    result = longest_increasing_subarray(arr);
-    print(arr,result);
-
-    arr = {1,2,3};
-    result = longest_increasing_subarray(arr);
-    print(arr,result);
-
-    arr = {2,11,3,5,13,7,19,17,23};
-    result = longest_increasing_subarray(arr);
-    print(arr,result);
-
+    {
+        vector<int> nums = {2, 11, 3, 5, 13, 7, 19, 17, 23};
+        auto p = longest_increasing_subarray (nums);
+        std::cout<<p.first<<", "<<p.second<<" expected is 2,4"<<std::endl;
+    }
+    {
+        vector<int> nums = {1,2,3,4};
+        auto p = longest_increasing_subarray (nums);
+        std::cout<<p.first<<", "<<p.second<<" expected is 0,3"<<std::endl;
+    }
+    {
+        vector<int> nums = {4,3,2,1};
+        auto p = longest_increasing_subarray (nums);
+        std::cout<<p.first<<", "<<p.second<<" expected is 0,0"<<std::endl;
+    }
+    {
+        vector<int> nums = {4,1,1,2,3,4,4};
+        auto p = longest_increasing_subarray (nums);
+        std::cout<<p.first<<", "<<p.second<<" expected is 2,5"<<std::endl;
+    }
 }
